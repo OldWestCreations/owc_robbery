@@ -8,13 +8,15 @@ author 'HerrScaletta | Old West Creations'
 description 'NPC Surrender and Money Drop Script'
 version '1.1'
 
-shared_script 'config.lua'
-
-client_scripts {
-    'client.lua'
+server_scripts {
+	'server/server.lua',
 }
 
-server_scripts {
-    'server.lua'
+shared_scripts {
+ 	'config.lua',
+}
+
+escrow_ignore {
+    'config.lua',
 }
 
