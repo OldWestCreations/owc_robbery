@@ -10,7 +10,7 @@ AddEventHandler('npc:dropMoney', function(npcNetId, amount, shouldAttack)
     local src = source
     local npc = NetworkGetEntityFromNetworkId(npcNetId)
     
-    if DoesEntityExist(npc) and not IsPedAPlayer(npc) then
+    if DoesEntityExist(npc) and not IsPedAPlayer(npc) and IsPedHuman(npc) then
         local npcId = tostring(npcNetId)
         
         if npcHasDroppedMoney[npcId] then
@@ -45,7 +45,7 @@ end)
 RegisterNetEvent('npc:playGiveAnim')
 AddEventHandler('npc:playGiveAnim', function(npcNetId)
     local npc = NetworkGetEntityFromNetworkId(npcNetId)
-    if DoesEntityExist(npc) then
+    if DoesEntityExist(npc) and IsPedHuman(npc) then
         TriggerClientEvent('npc:playGiveAnim', -1, npcNetId)
     end
 end)

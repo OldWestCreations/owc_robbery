@@ -6,7 +6,7 @@ Citizen.CreateThread(function()
         local playerPed = PlayerPedId()
         local aiming, entity = GetEntityPlayerIsFreeAimingAt(PlayerId())
 
-        if aiming and DoesEntityExist(entity) and IsEntityAPed(entity) and not IsPedAPlayer(entity) then
+        if aiming and DoesEntityExist(entity) and IsEntityAPed(entity) and not IsPedAPlayer(entity) and IsPedHuman(entity) then
             local npcNetId = NetworkGetNetworkIdFromEntity(entity)
 
             if IsPedArmed(playerPed, 4) then
@@ -57,7 +57,7 @@ end)
 RegisterNetEvent('npc:playGiveAnim')
 AddEventHandler('npc:playGiveAnim', function(npcNetId)
     local npc = NetworkGetEntityFromNetworkId(npcNetId)
-    if DoesEntityExist(npc) then
+    if DoesEntityExist(npc) and IsPedHuman(npc) then
         NPC_GIVEANIM(npc)
     end
 end)
