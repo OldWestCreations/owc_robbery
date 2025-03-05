@@ -16,6 +16,10 @@ This script allows players to rob NPCs by aiming at them with a revolver or pist
 ### Version 1.1
 - **Added:** A human ped check using `IsPedHuman()` to prevent animals from being robbed.
 - **Fixed:** Issue where animals could trigger the robbery script.
+- **Improved:** Script structure reorganized – `client.lua` and `server.lua` are now inside dedicated `client` and `server` folders for better project organization.
+
+This update ensures that only human NPCs can be targeted for robbery, improves script clarity, and enhances project structure.
+
 
 This update ensures that only human NPCs can be targeted for robbery, improving gameplay realism.
 
