@@ -11,7 +11,7 @@ Config.GiveMoneyAnimDict = 'script_rc@chrb@ig1_visit_clerk'
 Config.GiveMoneyAnim = 'arthur_gives_money_player'
 
 Config.Notification = { -- translations
-    AlreadyRobbed = {'Überfall Fehlgeschlagen', 'Du hast die Person bereits ausgeraubt!', 'generic_textures', 'cross', 4000},
-    MoneyDropped = {'Überfall erfolgreich', 'Beute: $%.2f', 'generic_textures', 'tick', 4000},
-    NPCFighting = {'Überfall fehlgeschlagen', 'Die Person kooperiert nicht!', 'generic_textures', 'cross', 4000}
+    AlreadyRobbed = {'failed', 'You have already robbed this person!', 'generic_textures', 'cross', 4000},
+    MoneyDropped = {'success', 'Loot: $%.2f', 'generic_textures', 'tick', 4000},
+    NPCFighting = {'failed', 'The person is not cooperating!', 'generic_textures', 'cross', 4000}
 }
