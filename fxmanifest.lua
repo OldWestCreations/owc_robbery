@@ -8,10 +8,6 @@ author 'HerrScaletta | Old West Creations'
 description 'NPC Surrender and Money Drop Script'
 version '1.1'
 
-server_scripts {
-	'server/server.lua',
-}
-
 shared_scripts {
  	'config.lua',
 }
