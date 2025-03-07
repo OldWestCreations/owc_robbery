@@ -20,3 +20,7 @@ server_scripts {
 	'server/server.lua',
 }
 
+vorp_checker 'yes'
+vorp_name '^5 Old West Creations ^4version Check^3'
+vorp_github 'https://github.com/OldWestCreations/owc_robbery'
+

@@ -5,12 +5,28 @@ end)
 
 local npcHasDroppedMoney = {}
 
+local animalModels = Config.AnimalModels
+
 RegisterNetEvent('npc:dropMoney')
 AddEventHandler('npc:dropMoney', function(npcNetId, amount, shouldAttack)
     local src = source
     local npc = NetworkGetEntityFromNetworkId(npcNetId)
     
-    if DoesEntityExist(npc) and not IsPedAPlayer(npc) and IsPedHuman(npc) then
+    if DoesEntityExist(npc) and not IsPedAPlayer(npc) then
+        local model = GetEntityModel(npc)
+        
+        local isAnimal = false
+        for _, animalModel in pairs(animalModels) do
+            if model == GetHashKey(animalModel) then
+                isAnimal = true
+                break
+            end
+        end
+        
+        if isAnimal then
+            return
+        end
+        
         local npcId = tostring(npcNetId)
         
         if npcHasDroppedMoney[npcId] then
@@ -45,7 +61,33 @@ end)
 RegisterNetEvent('npc:playGiveAnim')
 AddEventHandler('npc:playGiveAnim', function(npcNetId)
     local npc = NetworkGetEntityFromNetworkId(npcNetId)
-    if DoesEntityExist(npc) and IsPedHuman(npc) then
-        TriggerClientEvent('npc:playGiveAnim', -1, npcNetId)
+    
+    if DoesEntityExist(npc) and not IsPedAPlayer(npc) then
+        local model = GetEntityModel(npc)
+        
+        local isAnimal = false
+        for _, animalModel in pairs(animalModels) do
+            if model == GetHashKey(animalModel) then
+                isAnimal = true
+                break
+            end
+        end
+        
+        if not isAnimal then
+            TriggerClientEvent('npc:playGiveAnim', -1, npcNetId)
+        end
+    end
+end)
+
+RegisterNetEvent('npc:makeNpcFlee')
+AddEventHandler('npc:makeNpcFlee', function(npcNetId)
+    local npc = NetworkGetEntityFromNetworkId(npcNetId)
+    
+    if DoesEntityExist(npc) then
+        SetPedFleeAttributes(npc, 0, true)
+        SetPedFleeBehaviorOnCombatLoss(npc, true)
+        
+        Citizen.Wait(500)
+        TaskReactAndFleePed(npc, GetPlayerPed(-1))
     end
 end)
