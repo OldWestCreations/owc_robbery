@@ -12,16 +12,13 @@ This script allows players to rob NPCs by aiming at them with a revolver or pist
 - Integrated **animation** for money handover.
 
 ## 🔄 Changelog
+### Version 1.2
+- **Added:** A human ped check to prevent animals from being robbed.
+- **Fixed:** NPC's now do the money giving animation correctly. Previous animations are canceled
+- **Fixed:** Issue where animals could trigger the robbery script.
 
 ### Version 1.1
-- **Added:** A human ped check using `IsPedHuman()` to prevent animals from being robbed.
-- **Fixed:** Issue where animals could trigger the robbery script.
 - **Improved:** Script structure reorganized – `client.lua` and `server.lua` are now inside dedicated `client` and `server` folders for better project organization.
-
-This update ensures that only human NPCs can be targeted for robbery, improves script clarity, and enhances project structure.
-
-
-This update ensures that only human NPCs can be targeted for robbery, improving gameplay realism.
 
 ## 🔧 Installation
 1. Download and place the script in your `resources` folder.
