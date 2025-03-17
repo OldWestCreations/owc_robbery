@@ -15,17 +15,17 @@ This script allows players to rob NPCs by aiming at them with a revolver or pist
 
 ### Version 2.0
 🔄 **What’s New?**
-Complete Rework – The script has been fully reworked, taking inspiration from vorp_npcloot to integrate item rewards.
-Configurable Reward Items – You can now define which items NPCs drop upon robbery.
-Added translations.lua – Makes translations easier and more accessible.
-Gold & Money Rewards – NPCs can now reward both gold and in-game currency.
-Improved NPC Behavior – When a robbery starts, NPCs will now turn towards the player and raise their hands.
-Implemented surrenderDuration – Determines how long you must aim at an NPC before receiving rewards.
+- **Complete Rework** – The script has been fully reworked, taking inspiration from vorp_npcloot to integrate item rewards.
+- **Configurable Reward Items** – You can now define which items NPCs drop upon robbery.
+- **Added translations.lua** – Makes translations easier and more accessible.
+- **Gold & Money Rewards** – NPCs can now reward both gold and in-game currency.
+- **Improved NPC Behavior** – When a robbery starts, NPCs will now turn towards the player and raise their hands.
+- **Implemented surrenderDuration** – Determines how long you must aim at an NPC before receiving rewards.
 
 🔜 **What’s Coming Next?**
-Max Robbery Distance – Configurable maximum distance for initiating a robbery.
-NPC Aggressiveness – Reimplementation of NPC resistance (currently removed due to issues).
-Configurable Weapons – Define which weapons can start a robbery (currently, any weapon can trigger it).
+- **Max Robbery Distance** – Configurable maximum distance for initiating a robbery.
+- **NPC Aggressiveness** – Reimplementation of NPC resistance (currently removed due to issues).
+- **Configurable Weapons** – Define which weapons can start a robbery (currently, any weapon can trigger it).
 
 ### Version 1.3
 - **Added:** Players must aim at an NPC for at least 3 seconds before the robbery is triggered. This prevents accidental robberies when aiming at crowds.
