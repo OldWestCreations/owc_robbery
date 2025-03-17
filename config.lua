@@ -1,19 +1,32 @@
 Config = {}
 
-Config.SurrenderChance = 0.75
-Config.MinMoney = 0.01
-Config.MaxMoney = 0.18
-Config.WeaponChance = 0.6
-Config.GiveMoneyAnimDict = 'script_rc@chrb@ig1_visit_clerk'
-Config.GiveMoneyAnim = 'arthur_gives_money_player'
+Lang = "English"
 
-Config.Notification = {
-    AlreadyRobbed = {'Überfall Fehlgeschlagen', 'Du hast die Person bereits ausgeraubt!', 'generic_textures', 'cross', 4000},
-    MoneyDropped = {'Überfall erfolgreich', 'Beute: $%.2f', 'generic_textures', 'tick', 4000},
-    NPCFighting = {'Überfall fehlgeschlagen', 'Die Person kooperiert nicht!', 'generic_textures', 'cross', 4000}
+Config.useNotifyRight = false
+
+Config.surrenderDuration = 5000 -- in MS how long to aim at NPC to get loot
+
+Config.canReceiveItems = true
+Config.receiveItem = 35 -- Threshold number; receive item if random number is below this
+Config.chanceGettingItem = 20 -- Chance of getting an item, as a percentage
+Config.items = {
+    { name = "tooth_gold", label = "Goldtooth", amount = 1 },
+    { name = "tooth_silver", label = "Silvertooth", amount = 1 },
+    { name = "consumable_tobacco_cigarette_expensive", label = "Cigarette", amount = 1 },
+    { name = "provision_ring_gold", label = "Goldring", amount = 1 }, -- add more here
 }
 
-Config.AnimalModels = {
+Config.canReceiveMoney = true
+Config.receiveMoney = 45
+Config.chanceGettingMoney = 30
+Config.money = { 0.01, 0.02, 0.05 } -- amount of possible reward
+
+Config.canReceiveGold = false
+Config.receiveGold = 5
+Config.chanceGettingGold = 10
+Config.gold = { 0.01, 0.02, 0.05 } -- amount of possible reward
+
+Config.AnimalModels = { -- add models here to block from robberies!
     "a_c_alligator_01",
     "a_c_alligator_03",
     "a_c_armadillo_01",

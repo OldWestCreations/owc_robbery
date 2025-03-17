@@ -6,9 +6,10 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 
 author 'HerrScaletta | Old West Creations'
 description 'NPC Surrender and Money Drop Script'
-version '1.3'
+version '2.0'
 
 shared_scripts {
+    'translations.lua',
  	'config.lua',
 }
 
@@ -19,8 +20,4 @@ client_scripts {
 server_scripts {
 	'server/server.lua',
 }
-
-vorp_checker 'yes'
-vorp_name '^5 Old West Creations ^4version Check^3'
-vorp_github 'https://github.com/OldWestCreations/owc_robbery'
 

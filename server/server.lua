@@ -1,93 +1,73 @@
-local VorpCore = {}
+local VORPcore = {}
+
 TriggerEvent("getCore", function(core)
-    VorpCore = core
+    VORPcore = core
 end)
 
-local npcHasDroppedMoney = {}
+local Inventory = exports.vorp_inventory:vorp_inventoryApi()
+local T = Translation.Langs[Lang] 
 
-local animalModels = Config.AnimalModels
+local robbedPeds = {}
 
-RegisterNetEvent('npc:dropMoney')
-AddEventHandler('npc:dropMoney', function(npcNetId, amount, shouldAttack)
-    local src = source
-    local npc = NetworkGetEntityFromNetworkId(npcNetId)
-    
-    if DoesEntityExist(npc) and not IsPedAPlayer(npc) then
-        local model = GetEntityModel(npc)
-        
-        local isAnimal = false
-        for _, animalModel in pairs(animalModels) do
-            if model == GetHashKey(animalModel) then
-                isAnimal = true
-                break
-            end
-        end
-        
-        if isAnimal then
+RegisterServerEvent('npcrobbery:attemptRobbery')
+AddEventHandler('npcrobbery:attemptRobbery', function(pedID, model)
+    local _source = source
+
+    for _, blockedModel in pairs(Config.AnimalModels) do
+        if model == GetHashKey(blockedModel) then
             return
         end
-        
-        local npcId = tostring(npcNetId)
-        
-        if npcHasDroppedMoney[npcId] then
-            TriggerClientEvent('vorp:NotifyLeft', src, Config.Notification.AlreadyRobbed[1], Config.Notification.AlreadyRobbed[2], Config.Notification.AlreadyRobbed[3], Config.Notification.AlreadyRobbed[4])
-            return 
-        end
-        
-        npcHasDroppedMoney[npcId] = true 
-        
-        FreezeEntityPosition(npc, true)
-        Citizen.Wait(3000)
-        FreezeEntityPosition(npc, false)
-        
-        if shouldAttack then
-            GiveWeaponToPed(npc, GetHashKey("WEAPON_REVOLVER_CATTLEMAN"), 6, false, true)
-            TaskCombatPed(npc, GetPlayerPed(src), 0, 16)
-            TriggerClientEvent('vorp:NotifyLeft', src, Config.Notification.NPCFighting[1], Config.Notification.NPCFighting[2], Config.Notification.NPCFighting[3], Config.Notification.NPCFighting[4])
-            return
-        end
-        
-        local user = VorpCore.getUser(src)
-        if not user then return end
+    end
 
-        local character = user.getUsedCharacter
-        if not character then return end
-
-        character.addCurrency(0, amount)
-        TriggerClientEvent('vorp:NotifyLeft', src, Config.Notification.MoneyDropped[1], ('Betrag: $%.2f'):format(amount), Config.Notification.MoneyDropped[3], Config.Notification.MoneyDropped[4])
+    if robbedPeds[pedID] then
+        TriggerClientEvent("npcrobbery:notifyAlreadyRobbed", _source)
+    else
+        robbedPeds[pedID] = true
+        TriggerClientEvent("npcrobbery:startRobbery", _source, pedID)
     end
 end)
 
-RegisterNetEvent('npc:playGiveAnim')
-AddEventHandler('npc:playGiveAnim', function(npcNetId)
-    local npc = NetworkGetEntityFromNetworkId(npcNetId)
-    
-    if DoesEntityExist(npc) and not IsPedAPlayer(npc) then
-        local model = GetEntityModel(npc)
-        
-        local isAnimal = false
-        for _, animalModel in pairs(animalModels) do
-            if model == GetHashKey(animalModel) then
-                isAnimal = true
-                break
-            end
-        end
-        
-        if not isAnimal then
-            TriggerClientEvent('npc:playGiveAnim', -1, npcNetId)
-        end
-    end
-end)
+RegisterServerEvent('npcrobbery:giveLoot')
+AddEventHandler('npcrobbery:giveLoot', function(coords)
+    local _source = source
+    local User = VORPcore.getUser(_source)
+    if not User then return end
 
-RegisterNetEvent('npc:makeNpcFlee')
-AddEventHandler('npc:makeNpcFlee', function(npcNetId)
-    local npc = NetworkGetEntityFromNetworkId(npcNetId)
-    
-    if DoesEntityExist(npc) then
-        SetPedFleeAttributes(npc, 0, true)
-        SetPedFleeBehaviorOnCombatLoss(npc, true)
-        
-        Citizen.Wait(500)
-        TaskReactAndFleePed(npc, GetPlayerPed(-1))
+    local Character = User.getUsedCharacter
+    if not Character then return end
+
+    local lootGiven = false
+
+    if Config.canReceiveMoney and math.random(1, Config.chanceGettingMoney) < Config.receiveMoney then
+        local amount = Config.money[math.random(1, #Config.money)]
+        Character.addCurrency(0, amount)
+        VORPcore.NotifyLeft(_source, T.notifytitle, 
+            T.youGot .. string.format("%.2f", amount) .. T.currency, 
+            "BLIPS", "blip_ambient_bounty_target", 3000, "COLOR_GREEN")
+        lootGiven = true
+    end
+
+    if Config.canReceiveGold and math.random(1, Config.chanceGettingGold) < Config.receiveGold then
+        local amount = Config.gold[math.random(1, #Config.gold)]
+        Character.addCurrency(1, amount)
+        VORPcore.NotifyLeft(_source, T.notifytitle, 
+            T.youGot .. string.format("%.2f", amount) .. T.nugget, 
+            "BLIPS", "blip_ambient_bounty_target", 3000, "COLOR_GREEN")
+        lootGiven = true
+    end
+
+    if Config.canReceiveItems and math.random(1, Config.chanceGettingItem) < Config.receiveItem then
+        local item = Config.items[math.random(1, #Config.items)]
+        Inventory.addItem(_source, item.name, item.amount)
+        VORPcore.NotifyLeft(_source, T.notifytitle, 
+            T.youGot .. item.label, 
+            "BLIPS", "blip_ambient_bounty_target", 3000, "COLOR_GREEN")
+        lootGiven = true
+    end
+
+    if not lootGiven then
+        VORPcore.NotifyLeft(_source, T.notifytitle, 
+            T.nothingValuable, 
+            "BLIPS", "blip_destroy", 3000, "COLOR_RED")
     end
 end)
