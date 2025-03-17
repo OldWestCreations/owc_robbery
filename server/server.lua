@@ -38,7 +38,7 @@ AddEventHandler('npcrobbery:giveLoot', function(coords)
 
     local lootGiven = false
 
-    if Config.canReceiveMoney and math.random(1, Config.chanceGettingMoney) < Config.receiveMoney then
+    if Config.canReceiveMoney and math.random(1, 100) <= Config.chanceGettingMoney then
         local amount = Config.money[math.random(1, #Config.money)]
         Character.addCurrency(0, amount)
         VORPcore.NotifyLeft(_source, T.notifytitle, 
@@ -47,7 +47,7 @@ AddEventHandler('npcrobbery:giveLoot', function(coords)
         lootGiven = true
     end
 
-    if Config.canReceiveGold and math.random(1, Config.chanceGettingGold) < Config.receiveGold then
+    if Config.canReceiveGold and math.random(1, 100) <= Config.chanceGettingGold then
         local amount = Config.gold[math.random(1, #Config.gold)]
         Character.addCurrency(1, amount)
         VORPcore.NotifyLeft(_source, T.notifytitle, 
@@ -56,7 +56,7 @@ AddEventHandler('npcrobbery:giveLoot', function(coords)
         lootGiven = true
     end
 
-    if Config.canReceiveItems and math.random(1, Config.chanceGettingItem) < Config.receiveItem then
+    if Config.canReceiveItems and math.random(1, 100) <= Config.chanceGettingItem then
         local item = Config.items[math.random(1, #Config.items)]
         Inventory.addItem(_source, item.name, item.amount)
         VORPcore.NotifyLeft(_source, T.notifytitle, 

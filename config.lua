@@ -10,10 +10,7 @@ Config.canReceiveItems = true
 Config.receiveItem = 35 -- Threshold number; receive item if random number is below this
 Config.chanceGettingItem = 20 -- Chance of getting an item, as a percentage
 Config.items = {
-    { name = "tooth_gold", label = "Goldtooth", amount = 1 },
-    { name = "tooth_silver", label = "Silvertooth", amount = 1 },
     { name = "consumable_tobacco_cigarette_expensive", label = "Cigarette", amount = 1 },
-    { name = "provision_ring_gold", label = "Goldring", amount = 1 }, -- add more here
 }
 
 Config.canReceiveMoney = true

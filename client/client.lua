@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
         local aiming, targetPed = GetEntityPlayerIsFreeAimingAt(PlayerId())
 
         if aiming and DoesEntityExist(targetPed) and not IsPedAPlayer(targetPed) then
-            if IsPedArmed(playerPed, 4) then 
+            if IsPedArmed(playerPed, 4) and IsPlayerFreeAiming(PlayerId()) then
                 local pedModel = GetEntityModel(targetPed)
 
                 if NetworkGetEntityIsNetworked(targetPed) then
