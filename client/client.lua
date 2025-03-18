@@ -41,13 +41,19 @@ Citizen.CreateThread(function()
 
         if aiming and DoesEntityExist(targetPed) and not IsPedAPlayer(targetPed) then
             if IsPedArmed(playerPed, 4) and IsPlayerFreeAiming(PlayerId()) then
-                local pedModel = GetEntityModel(targetPed)
+                local playerCoords = GetEntityCoords(playerPed)
+                local targetCoords = GetEntityCoords(targetPed)
+                local distance = #(playerCoords - targetCoords)
 
-                if NetworkGetEntityIsNetworked(targetPed) then
-                    local pedID = NetworkGetNetworkIdFromEntity(targetPed)
-                    TriggerServerEvent("npcrobbery:attemptRobbery", pedID, pedModel)
-                else
-                    print("^3Warning: Target NPC is not networked. Robbery not possible.^7")
+                if distance <= 2.0 then
+                    local pedModel = GetEntityModel(targetPed)
+
+                    if NetworkGetEntityIsNetworked(targetPed) and not robbedPeds[pedModel] then
+                        local pedID = NetworkGetNetworkIdFromEntity(targetPed)
+                        TriggerServerEvent("npcrobbery:attemptRobbery", pedID, pedModel)
+                    else
+                        print("^3Warning: Target NPC is not networked or has already been robbed.^7")
+                    end
                 end
             end
         end
